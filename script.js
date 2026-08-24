@@ -103,3 +103,91 @@ function handleIconTap(element) {
         selectIcon(element);
     }
 }
+
+var terminalInput = document.querySelector("#terminalinput");
+var terminalOutput = document.querySelector("#terminaloutput");
+
+terminalInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        var command = terminalInput.value.trim();
+
+        terminalOutput.innerHTML +=
+            '<div><span class="prompt">viktor@nexos:~$</span> ' +
+            command +
+            '</div>';
+
+        runCommand(command);
+
+        terminalInput.value = "";
+    }
+});
+
+function runCommand(command) {
+
+    if (command === "help") {
+        terminalOutput.innerHTML += `
+<div>
+Available commands:
+
+help
+clear
+whoami
+pwd
+ls
+neofetch
+echo
+</div>`;
+    }
+
+    else if (command === "clear") {
+        terminalOutput.innerHTML = "";
+    }
+
+    else if (command === "whoami") {
+        terminalOutput.innerHTML += "<div>user</div>";
+    }
+
+    else if (command === "pwd") {
+        terminalOutput.innerHTML += "<div>/home/user</div>";
+    }
+
+    else if (command === "ls") {
+        terminalOutput.innerHTML += `
+<div>
+Desktop
+Documents
+Downloads
+NexOS
+</div>`;
+    }
+
+    else if (command === "neofetch") {
+        terminalOutput.innerHTML += `
+<div'>
+███╗   ██╗███████╗██╗  ██╗ ██████╗ ███████╗
+████╗  ██║██╔════╝╚██╗██╔╝██╔═══██╗██╔════╝
+██╔██╗ ██║█████╗   ╚███╔╝ ██║   ██║███████╗
+██║╚██╗██║██╔══╝   ██╔██╗ ██║   ██║╚════██║
+██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝███████║
+╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+
+</div>`;
+    }
+
+    else if (command.startsWith("echo ")) {
+        var text = command.substring(5);
+
+        terminalOutput.innerHTML +=
+            "<div>" + text + "</div>";
+    }
+
+    else if (command === "") {
+    }
+
+    else {
+        terminalOutput.innerHTML +=
+            "<div>Not found!</div>";
+    }
+
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+}
