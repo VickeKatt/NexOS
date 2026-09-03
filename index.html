@@ -30,7 +30,6 @@
 
     </div>
 
-
     <div class="terminal window" id="terminalwindow">
 
         <div class="windowheader terminal-header">
@@ -40,32 +39,83 @@
 
         <div id="terminaloutput"></div>
 
-        <div class="terminal-input-row">
-            <span class="prompt">viktor@nexos:~$</span>
-            <input type="text" id="terminalinput" autocomplete="off" autofocus>
+        <div class="terminal-input-line">
+            <span class="prompt">admin@nexos:~$</span>
+            <input type="text" id="terminalinput" autocomplete="off">
         </div>
 
     </div>
+
+    <div class="clock window" id="clockwindow">
+
+        <div class="windowheader">
+            <p>Clock</p>
+            <p id="clockclose">x</p>
+        </div>
+
+        <div id="clockdisplay">
+            00:00:00
+        </div>
+
+    </div>
+
+    <div class="settings window" id="settingswindow">
+
+        <div class="windowheader">
+            <p>Settings</p>
+            <p id="settingsclose">x</p>
+        </div>
+
+        <h2>Performance</h2>
+
+        <div class="setting">
+            <span>Performance Mode</span>
+
+            <label class="switch">
+                <input type="checkbox" id="performanceMode">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <p class="setting-description">
+            When enabled, apps open instantly.
+        </p>
 
     </div>
 
     <div id="desktopApps">
 
-        <div id="terminal" class="desktop-app" onclick="handleIconTap(this)">
-
-            <img class="app-icons" src="./APP%20LOGOS/terminal.png" alt="Terminal">
-            <p class="app-texts">Terminal</p>
-
+        <div id="clock_app" class="desktop-app" onclick="handleIconTap(this)">
+            <img class="app-icons" src="./APP%20LOGOS/clock.png" alt="Clock">
+            <p class="app-texts">Clock</p>
         </div>
 
-        <br>
+        <div id="terminal" class="desktop-app" onclick="handleIconTap(this)">
+            <img class="app-icons" src="./APP%20LOGOS/terminal.png" alt="Terminal">
+            <p class="app-texts">Terminal</p>
+        </div>
 
         <div id="welcomeopen" class="desktop-app" onclick="handleIconTap(this)">
-
             <img class="app-icons" src="./APP%20LOGOS/nexos_logo_small.png" alt="NexOS APP">
-
             <p class="app-texts">NexOS APP</p>
+        </div>
 
+        <div id="settings_app" class="desktop-app" onclick="handleIconTap(this)">
+            <img class="app-icons" src="./APP%20LOGOS/settings.png" alt="Settings">
+            <p class="app-texts">Settings</p>
+        </div>
+
+        <div id="github_app" class="desktop-app" onclick="handleIconTap(this)">
+            <img class="app-icons" src="./APP%20LOGOS/github_app.png" alt="GitHub">
+            <p class="app-texts">GitHub</p>
+        </div>
+
+        <div id="desktop-app-bar">
+            <img class="desktop-app-bar-icons" id="barClock" src="./APP%20LOGOS/clock.png" alt="Clock">
+            <img class="desktop-app-bar-icons" id="barNexos" src="./APP%20LOGOS/nexos_logo_small.png" alt="NexOS APP">
+            <img class="desktop-app-bar-icons" id="barTerminal" src="./APP%20LOGOS/terminal.png" alt="Terminal">
+            <img class="desktop-app-bar-icons" id="barSettings" src="./APP%20LOGOS/settings.png" alt="Settings">
+            <img class="desktop-app-bar-icons" id="barGithub" src="./APP%20LOGOS/github_app.png" alt="GitHub">
         </div>
 
     </div>

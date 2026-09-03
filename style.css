@@ -1,56 +1,152 @@
 body {
     margin: 0;
-    background-image: url("./d_bg_space.png");
+    background-image: url("./BACKGROUNDS/d_bg_space.png");
     background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     font-family: sans-serif;
     overflow: hidden;
 }
 
-.welcome,
-.terminal {
-    width: 700px;
-    text-align: center;
+.window {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border: 3px solid #000000;
-    padding: 50px;
     border-radius: 10px;
-    background-color: #FFFFFF;
-    z-index: 10;
+    box-sizing: border-box;
 }
 
 .welcome {
+    width: 60vw;
+    max-width: 800px;
+    padding: 3vw;
+    text-align: center;
+    background-color: #ffffff;
     z-index: 10;
 }
 
 .terminal {
-    z-index: 11;
+    width: 65vw;
+    height: 65vh;
+    max-width: 900px;
+    max-height: 700px;
+    min-width: min(500px, 85vw);
+    min-height: min(400px, 75vh);
+    padding: 2.5vw;
     background-color: #0a0a0a;
     color: #00ff41;
     font-family: monospace;
     text-align: left;
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.clock {
+    width: 50vw;
+    max-width: 700px;
+    padding: 3vw;
+    background-color: #1a1a1a;
+    color: #e5e5e5;
+    text-align: center;
+    z-index: 12;
+}
+
+.settings {
+    width: 50vw;
+    max-width: 700px;
+    padding: 3vw;
+    background-color: #1a1a1a;
+    color: #e5e5e5;
+    text-align: left;
+    z-index: 13;
+}
+
+.settings h2 {
+    margin-top: 0;
+    font-size: clamp(1.3rem, 2vw, 2rem);
+}
+
+.setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    font-size: clamp(1rem, 1.3vw, 1.5rem);
+    font-weight: bold;
+}
+
+.setting-description {
+    color: #999999;
+    font-size: 0.9rem;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 55px;
+    height: 30px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #555555;
+    border-radius: 30px;
+    transition: 0.2s;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #e5e5e5;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.switch input:checked + .slider {
+    background-color: #00ff41;
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(25px);
 }
 
 h1 {
-    color: #121E2B;
-    font-size: 40px;
+    color: #121e2b;
+    font-size: 50px;
     margin-bottom: 20px;
 }
 
 .welcome img {
-    width: 400px;
-    height: 220px;
+    width: 50%;
+    height: auto;
+    max-height: 30vh;
     object-fit: contain;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 20px auto;
 }
 
 a {
     color: blue;
     font-weight: bold;
-    font-size: 24px;
+    font-size: clamp(1rem, 1.5vw, 2rem);
     text-decoration: none;
 }
 
@@ -59,9 +155,10 @@ a:hover {
 }
 
 .topbar {
-    color: #FFFFFF;
+    width: 100%;
+    color: #ffffff;
     font-family: sans-serif;
-    font-size: 18px;
+    font-size: clamp(0.8rem, 1vw, 1.2rem);
     font-weight: bold;
     display: flex;
     justify-content: space-around;
@@ -72,19 +169,26 @@ a:hover {
 
 .windowheader {
     color: #000000;
-    background-color: #E5E5E5;
-    margin: -50px -50px 20px -50px;
+    background-color: #e5e5e5;
+    margin: -3vw -3vw 2vw -3vw;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-family: sans-serif;
-    font-size: 18px;
+    font-size: clamp(0.8rem, 1vw, 1.2rem);
     font-weight: bold;
     border-bottom: 3px solid #000000;
     border-radius: 7px 7px 0 0;
     cursor: grab;
     user-select: none;
+    flex: 0 0 auto;
+    min-height: 45px;
+    box-sizing: border-box;
+}
+
+.windowheader p {
+    margin: 15px 0;
 }
 
 .windowheader p:last-child {
@@ -95,23 +199,56 @@ a:hover {
 
 .windowheader p:last-child:hover {
     background-color: #e81123;
-    color: white;
+    color: #ffffff;
 }
 
 .terminal .windowheader {
+    margin: -2.5vw -2.5vw 2vw -2.5vw;
     color: #00ff41;
     background-color: #1a1a1a;
     font-family: monospace;
     border-bottom: 3px solid #00ff41;
 }
 
+.clock .windowheader {
+    margin: -3vw -3vw 2vw -3vw;
+    color: #e5e5e5;
+    background-color: #000000;
+    border-bottom: 3px solid #000000;
+}
+
+.settings .windowheader {
+    margin: -3vw -3vw 2vw -3vw;
+    color: #e5e5e5;
+    background-color: #000000;
+    border-bottom: 3px solid #000000;
+}
+
 #desktopApps {
     position: absolute;
-    top: 100px;
-    left: 20px;
-    width: 90px;
+    top: 8%;
+    left: 1.5%;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 67px;
     text-align: center;
     z-index: 1;
+}
+
+.desktop-app {
+    width: 90px;
+    height: 110px;
+    padding: 10px 5px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.desktop-app.app-selected {
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .app-icons {
@@ -121,11 +258,11 @@ a:hover {
     border-radius: 15px;
     display: block;
     margin: 0 auto;
-    border: 2px solid #FFFFFF;
+    border: 2px solid #ffffff;
 }
 
 .app-texts {
-    color: #FFFFFF;
+    color: #ffffff;
     font-family: sans-serif;
     font-size: 14px;
     font-weight: bold;
@@ -133,22 +270,9 @@ a:hover {
     margin: 5px 0 0 0;
 }
 
-.desktop-app {
-    width: 90px;
-    padding: 10px 5px 5px 5px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.desktop-app.app-selected {
-    background-color: rgba(255, 255, 255, 0.3);
-}
-
-#terminal {
-    margin-bottom: 20px;
-}
-
-#terminalwindow {
+#terminalwindow,
+#clockwindow,
+#settingswindow {
     display: none;
 }
 
@@ -156,30 +280,168 @@ a:hover {
     color: #00ff41;
     font-family: monospace;
     white-space: pre-wrap;
-    min-height: 300px;
-    max-height: 400px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
     overflow-y: auto;
+    overflow-x: hidden;
+    line-height: 1.4;
+    font-size: clamp(0.7rem, 0.9vw, 1.2rem);
+}
+
+#terminaloutput div {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .terminal-input-line {
+    width: 100%;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
+    min-width: 0;
     font-family: monospace;
     color: #00ff41;
+    margin-top: 10px;
 }
 
 .prompt {
     color: #00ff41;
     margin-right: 8px;
     white-space: nowrap;
+    flex-shrink: 0;
+    font-size: clamp(0.7rem, 0.9vw, 1.2rem);
 }
 
 #terminalinput {
-    flex: 1;
+    flex: 1 1 auto;
+    width: 0;
+    min-width: 0;
     background-color: transparent;
     border: none;
     outline: none;
     color: #00ff41;
     font-family: monospace;
-    font-size: 16px;
+    font-size: clamp(0.7rem, 0.9vw, 1.2rem);
+}
+
+#clockdisplay {
+    color: #e5e5e5;
+    font-family: monospace;
+    font-size: clamp(2rem, 5vw, 6rem);
+    font-weight: bold;
+    padding: 30px 0;
+}
+
+#desktop-app-bar {
+    position: fixed;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    height: auto;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: rgba(20, 20, 20, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 18px;
+    backdrop-filter: blur(10px);
+    z-index: 200;
+    box-sizing: border-box;
+}
+
+.desktop-app-bar-icons {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.desktop-app-bar-icons:hover {
+    transform: scale(1.12);
+}
+
+@media (max-width: 700px) {
+    .welcome {
+        width: 90vw;
+        padding: 5vw;
+    }
+
+    .terminal {
+        width: 90vw;
+        height: 70vh;
+        min-width: 0;
+        min-height: 0;
+        padding: 5vw;
+    }
+
+    .clock {
+        width: 85vw;
+        padding: 5vw;
+    }
+
+    .settings {
+        width: 85vw;
+        padding: 5vw;
+    }
+
+    .windowheader {
+        margin: -5vw -5vw 3vw -5vw;
+    }
+
+    .terminal .windowheader {
+        margin: -5vw -5vw 3vw -5vw;
+    }
+
+    .clock .windowheader {
+        margin: -5vw -5vw 3vw -5vw;
+    }
+
+    .settings .windowheader {
+        margin: -5vw -5vw 3vw -5vw;
+    }
+
+    #desktopApps {
+        left: 2vw;
+        width: 75px;
+    }
+
+    .desktop-app {
+    width: 90px;
+    height: 110px;
+    padding: 10px 5px;
+    margin-bottom: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    box-sizing: border-box;
+    }
+
+    .app-icons {
+        width: 55px;
+        height: 55px;
+    }
+
+    .app-texts {
+        font-size: 12px;
+    }
+
+    #desktop-app-bar {
+        bottom: 2%;
+        padding: 8px 12px;
+        gap: 8px;
+        border-radius: 15px;
+    }
+
+    .desktop-app-bar-icons {
+        width: 45px;
+        height: 45px;
+    }
 }
