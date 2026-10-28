@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-image: url("./BACKGROUNDS/d_bg_space.png");
+    background-image: url("./BACKGROUNDS/bg_space_dark.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -121,7 +121,7 @@ body {
 }
 
 .switch input:checked + .slider {
-    background-color: #00ff41;
+    background-color: #2d2580;
 }
 
 .switch input:checked + .slider:before {
