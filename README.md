@@ -20,7 +20,7 @@ Link: https://stardance.hackclub.com/projects/46738
 ## Hackatime 
 This is how much time i spent on this:
 
-![Hackatime Stats](https://github-readme-stats.hackclub.dev/api/wakatime?username=39739&api_domain=hackatime.hackclub.com&theme=darcula&custom_title=Hackatime+Stats&layout=compact&cache_seconds=0&langs_count=8)
+{{ wakatimeDoubleCategoryBar "Languages:" wakatimeData.Languages "Projects:" wakatimeData.Projects 5 }}
 
 ## Screenshot
 
