@@ -13,10 +13,12 @@ This is my Web OS called NexOS!
 ### Website
 
 MAIN:          viktor.runs-on.dev
+<br>
 GITHUB PAGES:  vickekatt.github.io/NexOS
 
 ### Stardance
 Originally created for the Hackclub Stardance Mission Web OS 1, but now it's a personal project
+<br>
 Link: https://stardance.hackclub.com/projects/46738
 
 ## Screenshot / GIF
