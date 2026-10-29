@@ -1,108 +1,80 @@
-    <!DOCTYPE html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexOS</title>
     <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
-
     <div class="topbar">
         <p>NexOS</p>
         <p id="datetime"></p>
     </div>
 
     <div class="welcome window" id="welcomewindow">
-
         <div class="windowheader">
-            <p>NexOS</p>
-            <p id="welcomeclose">x</p>
+            <p>NexOS</p><p id="welcomeclose">x</p>
         </div>
-
         <h1>WELCOME TO NEXOS!</h1>
-
         <img src="./NEXOS%20LOGOS/nexos_logo.png" alt="NexOS LOGO">
-
         <a href="https://github.com/VickeKatt/NexOS/">GitHub Repo</a>
-
     </div>
 
     <div class="terminal window" id="terminalwindow">
-
         <div class="windowheader terminal-header">
-            <p>Terminal</p>
-            <p id="terminalclose">x</p>
+            <p>Terminal</p><p id="terminalclose">x</p>
         </div>
-
         <div id="terminaloutput"></div>
-
         <div class="terminal-input-line">
             <span class="prompt">admin@nexos:~$</span>
             <input type="text" id="terminalinput" autocomplete="off">
         </div>
-
     </div>
 
     <div class="clock window" id="clockwindow">
-
         <div class="windowheader">
-            <p>Clock</p>
-            <p id="clockclose">x</p>
+            <p>Clock</p><p id="clockclose">x</p>
         </div>
-
-        <div id="clockdisplay">
-            00:00:00
-        </div>
-
+        <div id="clockdisplay">00:00:00</div>
     </div>
 
     <div class="settings window" id="settingswindow">
-
         <div class="windowheader">
-            <p>Settings</p>
-            <p id="settingsclose">x</p>
+            <p>Settings</p><p id="settingsclose">x</p>
         </div>
 
         <h2>Performance</h2>
-
         <div class="setting">
             <span>Performance Mode</span>
-
             <label class="switch">
                 <input type="checkbox" id="performanceMode">
                 <span class="slider"></span>
             </label>
         </div>
-
-        <p class="setting-description">
-            When enabled, apps open instantly.
-        </p>
+        <p class="setting-description">When enabled, apps open instantly.</p>
 
         <hr>
-
         <h2>Wallpaper</h2>
-
         <div class="wallpaper-grid">
-            <button class="wallpaper-option" type="button" data-wallpaper="./WALLPAPERS/bg_space_dark.png" aria-label="Dark Space">
-            <span class="wallpaper-preview dark-wallpaper"></span>  
-            <span>Dark Space</span>
-        </button>
-
-        <button class="wallpaper-option" type="button" data-wallpaper="./WALLPAPERS/bg_space_light.png" aria-label="Light space wallpaper">
-            <span class="wallpaper-preview light-wallpaper"></span>
-            <span>Space Light</span>
-        </button>
+            <button class="wallpaper-option" type="button"
+                data-wallpaper="./WALLPAPERS/bg_space_dark.png"
+                aria-label="Dark Space">
+                <span class="wallpaper-preview dark-wallpaper"></span>
+                <span>Dark Space</span>
+            </button>
+            <button class="wallpaper-option" type="button"
+                data-wallpaper="./WALLPAPERS/bg_space_light.png"
+                aria-label="Light Space">
+                <span class="wallpaper-preview light-wallpaper"></span>
+                <span>Space Light</span>
+            </button>
         </div>
-
     </div>
 
     <div class="nexdraw window" id="nexdrawwindow">
         <div class="windowheader nexdraw-header">
-            <p>NexDraw</p>
-            <p id="nexdrawclose">x</p>
+            <p>NexDraw</p><p id="nexdrawclose">x</p>
         </div>
 
         <div class="nexdraw-toolbar">
@@ -115,8 +87,67 @@
                 <option value="circle">Ellipse</option>
             </select>
 
-            <label for="drawcolor">Color</label>
-            <input type="color" id="drawcolor" value="#000000">
+            <div class="color-picker-wrap">
+                <button type="button" id="drawcolorbutton"
+                    class="color-current-button" aria-expanded="false">
+                    <span id="drawcolorpreview"></span>
+                    <span id="drawcolorlabel">Color</span>
+                    <span>▾</span>
+                </button>
+
+                <div id="drawcolorpanel" class="color-panel" hidden>
+                    <div class="color-panel-heading">
+                        <strong>Choose a color</strong>
+                        <button type="button" id="drawcolorclose"
+                            aria-label="Close color picker">×</button>
+                    </div>
+
+                    <div class="color-preview-row">
+                        <span id="drawcolorlargepreview"></span>
+                        <div>
+                            <strong id="drawcolorname">Black</strong>
+                            <small>Selected color</small>
+                        </div>
+                    </div>
+
+                    <label class="picker-label" for="drawsv">Color field</label>
+                    <div id="drawsv" class="color-saturation" tabindex="0"
+                        role="slider" aria-label="Color saturation and brightness">
+                        <span id="drawsvcursor"></span>
+                    </div>
+
+                    <label class="picker-label" for="drawhue">Hue</label>
+                    <input type="range" id="drawhue" min="0" max="360" value="0">
+
+                    <label class="picker-label" for="drawhex">HEX color</label>
+                    <div class="hex-row">
+                        <span>#</span>
+                        <input type="text" id="drawhex" value="000000"
+                            maxlength="7" spellcheck="false" autocomplete="off">
+                        <button type="button" id="drawhexapply">Apply</button>
+                    </div>
+
+                    <div class="palette-heading">Preset colors</div>
+                    <div id="drawpalette" class="color-palette">
+                        <button type="button" data-color="#000000" style="--swatch:#000000" aria-label="Black"></button>
+                        <button type="button" data-color="#FFFFFF" style="--swatch:#FFFFFF" aria-label="White"></button>
+                        <button type="button" data-color="#FF3B30" style="--swatch:#FF3B30" aria-label="Red"></button>
+                        <button type="button" data-color="#FF9500" style="--swatch:#FF9500" aria-label="Orange"></button>
+                        <button type="button" data-color="#FFCC00" style="--swatch:#FFCC00" aria-label="Yellow"></button>
+                        <button type="button" data-color="#34C759" style="--swatch:#34C759" aria-label="Green"></button>
+                        <button type="button" data-color="#00C7BE" style="--swatch:#00C7BE" aria-label="Turquoise"></button>
+                        <button type="button" data-color="#007AFF" style="--swatch:#007AFF" aria-label="Blue"></button>
+                        <button type="button" data-color="#5856D6" style="--swatch:#5856D6" aria-label="Purple"></button>
+                        <button type="button" data-color="#AF52DE" style="--swatch:#AF52DE" aria-label="Violet"></button>
+                        <button type="button" data-color="#FF2D55" style="--swatch:#FF2D55" aria-label="Pink"></button>
+                        <button type="button" data-color="#795548" style="--swatch:#795548" aria-label="Brown"></button>
+                        <button type="button" data-color="#808080" style="--swatch:#808080" aria-label="Gray"></button>
+                        <button type="button" data-color="#A8E6CF" style="--swatch:#A8E6CF" aria-label="Mint"></button>
+                        <button type="button" data-color="#FADADD" style="--swatch:#FADADD" aria-label="Pastel pink"></button>
+                        <button type="button" data-color="#87CEEB" style="--swatch:#87CEEB" aria-label="Sky blue"></button>
+                    </div>
+                </div>
+            </div>
 
             <label for="drawsize">Size</label>
             <input type="range" id="drawsize" min="1" max="50" value="5">
@@ -134,13 +165,10 @@
             <canvas id="drawcanvas" width="1200" height="700"></canvas>
         </div>
     </div>
-</div>
-
 
     <div id="desktopApps">
-
         <div id="nexdraw_app" class="desktop-app" onclick="handleIconTap(this)">
-            <img class="app-icons" src="./APP%20LOGOS/nexdraw.svg" alt="NexDraw">
+            <img class="app-icons" src="./APP%20LOGOS/nexdraw.png" alt="NexDraw">
             <p class="app-texts">NexDraw</p>
         </div>
 
@@ -170,18 +198,15 @@
         </div>
 
         <div id="desktop-app-bar">
-
-            <img class="desktop-app-bar-icons" id="barNexDraw" src="./APP%20LOGOS/nexdraw.svg" alt="NexDraw">
+            <img class="desktop-app-bar-icons" id="barNexDraw" src="./APP%20LOGOS/nexdraw.png" alt="NexDraw">
             <img class="desktop-app-bar-icons" id="barClock" src="./APP%20LOGOS/clock.png" alt="Clock">
             <img class="desktop-app-bar-icons" id="barNexos" src="./APP%20LOGOS/nexos_logo_small.png" alt="NexOS APP">
             <img class="desktop-app-bar-icons" id="barTerminal" src="./APP%20LOGOS/terminal.png" alt="Terminal">
             <img class="desktop-app-bar-icons" id="barSettings" src="./APP%20LOGOS/settings.png" alt="Settings">
             <img class="desktop-app-bar-icons" id="barGithub" src="./APP%20LOGOS/github_app.png" alt="GitHub">
         </div>
-
     </div>
 
     <script src="./script.js"></script>
-
 </body>
 </html>

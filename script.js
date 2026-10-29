@@ -369,13 +369,13 @@ setWallpaper(
         : defaultWallpaper
 );
 
+
 (function initNexDraw() {
     const canvas = document.querySelector("#drawcanvas");
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     const tool = document.querySelector("#drawtool");
-    const color = document.querySelector("#drawcolor");
     const size = document.querySelector("#drawsize");
     const sizeValue = document.querySelector("#drawsizevalue");
     const undoButton = document.querySelector("#drawundo");
@@ -385,13 +385,33 @@ setWallpaper(
     const saveButton = document.querySelector("#drawsave");
     const fileInput = document.querySelector("#drawfile");
 
+    // Custom color picker
+    const colorButton = document.querySelector("#drawcolorbutton");
+    const colorPanel = document.querySelector("#drawcolorpanel");
+    const colorClose = document.querySelector("#drawcolorclose");
+    const colorPreview = document.querySelector("#drawcolorpreview");
+    const colorLargePreview = document.querySelector("#drawcolorlargepreview");
+    const colorLabel = document.querySelector("#drawcolorlabel");
+    const colorName = document.querySelector("#drawcolorname");
+    const hexInput = document.querySelector("#drawhex");
+    const hexApply = document.querySelector("#drawhexapply");
+    const hueInput = document.querySelector("#drawhue");
+    const saturationBox = document.querySelector("#drawsv");
+    const saturationCursor = document.querySelector("#drawsvcursor");
+    const palette = document.querySelector("#drawpalette");
+
+    let selectedColor = "#000000";
+    let hue = 0;
+    let saturation = 0;
+    let brightness = 0;
+    let pickingColor = false;
+
     const undoStack = [];
     const redoStack = [];
     const maxHistory = 30;
 
     let drawing = false;
     let start = null;
-    let last = null;
     let points = [];
     let original = null;
 
@@ -420,14 +440,12 @@ setWallpaper(
 
     function undo() {
         if (!undoStack.length) return;
-
         redoStack.push(snapshot());
         ctx.putImageData(undoStack.pop(), 0, 0);
     }
 
     function redo() {
         if (!redoStack.length) return;
-
         undoStack.push(snapshot());
         ctx.putImageData(redoStack.pop(), 0, 0);
     }
@@ -452,7 +470,7 @@ setWallpaper(
         ctx.lineWidth = Number(size.value);
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
-        ctx.strokeStyle = tool.value === "eraser" ? "#ffffff" : color.value;
+        ctx.strokeStyle = tool.value === "eraser" ? "#ffffff" : selectedColor;
     }
 
     function drawShape(from, to) {
@@ -463,21 +481,14 @@ setWallpaper(
             ctx.lineTo(to.x, to.y);
             ctx.stroke();
         } else if (tool.value === "rect") {
-            ctx.strokeRect(
-                from.x,
-                from.y,
-                to.x - from.x,
-                to.y - from.y
-            );
+            ctx.strokeRect(from.x, from.y, to.x - from.x, to.y - from.y);
         } else if (tool.value === "circle") {
             const rx = Math.abs(to.x - from.x) / 2;
             const ry = Math.abs(to.y - from.y) / 2;
             const cx = (from.x + to.x) / 2;
             const cy = (from.y + to.y) / 2;
 
-            ctx.ellipse(
-                cx, cy, rx, ry, 0, 0, Math.PI * 2
-            );
+            ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
             ctx.stroke();
         }
     }
@@ -505,7 +516,6 @@ setWallpaper(
 
         drawing = true;
         start = position(event);
-        last = start;
         points = [start];
         original = snapshot();
 
@@ -529,7 +539,6 @@ setWallpaper(
         }
 
         redrawPreview(current);
-        last = current;
     });
 
     function stopDrawing(event) {
@@ -545,7 +554,6 @@ setWallpaper(
 
         drawing = false;
         start = null;
-        last = null;
         points = [];
         original = null;
     }
@@ -632,4 +640,214 @@ setWallpaper(
             }, 1000);
         }, "image/png");
     });
+
+    // Convert HSV values into a HEX color.
+    function hsvToHex(h, s, v) {
+        s /= 100;
+        v /= 100;
+
+        const c = v * s;
+        const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+        const m = v - c;
+        let rgb;
+
+        if (h < 60) rgb = [c, x, 0];
+        else if (h < 120) rgb = [x, c, 0];
+        else if (h < 180) rgb = [0, c, x];
+        else if (h < 240) rgb = [0, x, c];
+        else if (h < 300) rgb = [x, 0, c];
+        else rgb = [c, 0, x];
+
+        return "#" + rgb.map(value => {
+            return Math.round((value + m) * 255)
+                .toString(16).padStart(2, "0");
+        }).join("").toUpperCase();
+    }
+
+    // Convert HEX to HSV so the picker follows palette/HEX selections.
+    function hexToHsv(hex) {
+        const clean = hex.replace("#", "");
+        const r = parseInt(clean.slice(0, 2), 16) / 255;
+        const g = parseInt(clean.slice(2, 4), 16) / 255;
+        const b = parseInt(clean.slice(4, 6), 16) / 255;
+
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        const delta = max - min;
+        let h = 0;
+
+        if (delta !== 0) {
+            if (max === r) h = 60 * (((g - b) / delta) % 6);
+            else if (max === g) h = 60 * ((b - r) / delta + 2);
+            else h = 60 * ((r - g) / delta + 4);
+        }
+
+        if (h < 0) h += 360;
+
+        return {
+            h,
+            s: max === 0 ? 0 : delta / max * 100,
+            v: max * 100
+        };
+    }
+
+    function colorDescription(hex) {
+        const known = {
+            "#000000": "Black",
+            "#FFFFFF": "White",
+            "#FF3B30": "Red",
+            "#FF9500": "Orange",
+            "#FFCC00": "Yellow",
+            "#34C759": "Green",
+            "#00C7BE": "Turquoise",
+            "#007AFF": "Blue",
+            "#5856D6": "Purple",
+            "#AF52DE": "Violet",
+            "#FF2D55": "Pink",
+            "#795548": "Brown",
+            "#808080": "Gray",
+            "#A8E6CF": "Mint",
+            "#FADADD": "Pastel pink",
+            "#87CEEB": "Sky blue"
+        };
+
+        return known[hex] || "Custom color";
+    }
+
+    function updateColorUI() {
+        selectedColor = hsvToHex(hue, saturation, brightness);
+
+        colorPreview.style.backgroundColor = selectedColor;
+        colorLargePreview.style.backgroundColor = selectedColor;
+        colorName.textContent = colorDescription(selectedColor);
+        colorLabel.textContent = selectedColor;
+        hexInput.value = selectedColor.slice(1);
+
+        saturationBox.style.backgroundColor = "hsl(" + hue + ", 100%, 50%)";
+        saturationCursor.style.left = saturation + "%";
+        saturationCursor.style.top = (100 - brightness) + "%";
+
+        palette.querySelectorAll("button").forEach(button => {
+            const active = button.dataset.color.toUpperCase() === selectedColor;
+            button.classList.toggle("active", active);
+        });
+    }
+
+    function setColor(hex) {
+        const clean = hex.trim().replace(/^#/, "");
+
+        if (!/^[0-9a-fA-F]{6}$/.test(clean)) {
+            hexInput.setCustomValidity("Enter a valid six-digit HEX color.");
+            hexInput.reportValidity();
+            return;
+        }
+
+        hexInput.setCustomValidity("");
+
+        const normalized = "#" + clean.toUpperCase();
+        const hsv = hexToHsv(normalized);
+
+        hue = hsv.h;
+        saturation = hsv.s;
+        brightness = hsv.v;
+
+        hueInput.value = hue;
+        updateColorUI();
+    }
+
+    function updateFromSaturationPointer(event) {
+        const rect = saturationBox.getBoundingClientRect();
+
+        saturation = Math.max(0, Math.min(
+            100, (event.clientX - rect.left) / rect.width * 100
+        ));
+
+        brightness = 100 - Math.max(0, Math.min(
+            100, (event.clientY - rect.top) / rect.height * 100
+        ));
+
+        updateColorUI();
+    }
+
+    colorButton.addEventListener("click", function(event) {
+        event.stopPropagation();
+
+        const opening = colorPanel.hidden;
+        colorPanel.hidden = !opening;
+        colorButton.setAttribute("aria-expanded", String(opening));
+    });
+
+    colorClose.addEventListener("click", function() {
+        colorPanel.hidden = true;
+        colorButton.setAttribute("aria-expanded", "false");
+    });
+
+    document.addEventListener("pointerdown", function(event) {
+        if (!colorPanel.hidden &&
+            !colorPanel.contains(event.target) &&
+            !colorButton.contains(event.target)) {
+            colorPanel.hidden = true;
+            colorButton.setAttribute("aria-expanded", "false");
+        }
+    });
+
+    hueInput.addEventListener("input", function() {
+        hue = Number(hueInput.value);
+        updateColorUI();
+    });
+
+    saturationBox.addEventListener("pointerdown", function(event) {
+        pickingColor = true;
+        saturationBox.setPointerCapture(event.pointerId);
+        updateFromSaturationPointer(event);
+    });
+
+    saturationBox.addEventListener("pointermove", function(event) {
+        if (pickingColor) updateFromSaturationPointer(event);
+    });
+
+    saturationBox.addEventListener("pointerup", function() {
+        pickingColor = false;
+    });
+
+    saturationBox.addEventListener("pointercancel", function() {
+        pickingColor = false;
+    });
+
+    saturationBox.addEventListener("keydown", function(event) {
+        const step = event.shiftKey ? 10 : 2;
+
+        if (event.key === "ArrowRight") saturation = Math.min(100, saturation + step);
+        else if (event.key === "ArrowLeft") saturation = Math.max(0, saturation - step);
+        else if (event.key === "ArrowUp") brightness = Math.min(100, brightness + step);
+        else if (event.key === "ArrowDown") brightness = Math.max(0, brightness - step);
+        else return;
+
+        event.preventDefault();
+        updateColorUI();
+    });
+
+    hexApply.addEventListener("click", function() {
+        setColor(hexInput.value);
+    });
+
+    hexInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            setColor(hexInput.value);
+        }
+    });
+
+    hexInput.addEventListener("input", function() {
+        hexInput.setCustomValidity("");
+    });
+
+    palette.addEventListener("click", function(event) {
+        const button = event.target.closest("button[data-color]");
+        if (!button) return;
+        setColor(button.dataset.color);
+    });
+
+    // Start with black selected.
+    hueInput.value = hue;
+    updateColorUI();
 })();
