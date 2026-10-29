@@ -312,3 +312,39 @@ document.querySelector("#github_app").addEventListener("dblclick", function() {
 document.querySelector("#barGithub").addEventListener("click", function() {
     window.open("https://github.com/VickeKatt/NexOS", "_blank");
 });
+
+const wallpaperOptions = document.querySelectorAll(".wallpaper-option");
+
+const defaultWallpaper = "./WALLPAPERS/bg_space_dark.png";
+const savedWallpaper = localStorage.getItem("nexosWallpaper");
+
+const availableWallpapers = Array.from(wallpaperOptions)
+    .map(option => option.dataset.wallpaper);
+
+function setWallpaper(path) {
+    if (!availableWallpapers.includes(path)) {
+        return;
+    }
+
+    document.body.style.backgroundImage = `url("${path}")`;
+    localStorage.setItem("nexosWallpaper", path);
+
+    wallpaperOptions.forEach(option => {
+        const selected = option.dataset.wallpaper === path;
+
+        option.classList.toggle("active", selected);
+        option.setAttribute("aria-pressed", String(selected));
+    });
+}
+
+wallpaperOptions.forEach(option => {
+    option.addEventListener("click", () => {
+        setWallpaper(option.dataset.wallpaper);
+    });
+});
+
+setWallpaper(
+    availableWallpapers.includes(savedWallpaper)
+        ? savedWallpaper
+        : defaultWallpaper
+);

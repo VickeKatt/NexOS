@@ -445,3 +445,56 @@ a:hover {
         height: 45px;
     }
 }
+
+.wallpaper-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.wallpaper-option {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    color: #e5e5e5;
+    background: #252525;
+    border: 2px solid #555;
+    border-radius: 8px;
+    font: inherit;
+    cursor: pointer;
+    text-align: center;
+}
+
+.wallpaper-option:hover {
+    background: #353535;
+    border-color: #aaa;
+}
+
+.wallpaper-option.active {
+    border-color: #00ff41;
+}
+
+.wallpaper-preview {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 4px;
+    background-size: cover;
+    background-position: center;
+}
+
+.dark-wallpaper {
+    background-image: url("./WALLPAPERS/bg_space_dark.png");
+}
+
+.light-wallpaper {
+    background-image: url("./WALLPAPERS/bg_space_light.png");
+}
+
+@media (max-width: 500px) {
+    .wallpaper-grid {
+        grid-template-columns: 1fr;
+    }
+}
