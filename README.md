@@ -1,16 +1,28 @@
 # NexOS
 
 <p align="center">
-    <img src="./NEXOS%20LOGOS/nexos_logo.png" width="400">
+    <img src="./NEXOS%20LOGOS/nexos_logo.svg" width="800">
 </p>
 
 ## About
 
-This is my web OS project for the Stardance Mission Web OS 1.
+This is my Web OS called NexOS!
+
+### Website
+
+MAIN:          viktor.runs-on.dev
+GITHUB PAGES:  vickekatt.github.io/NexOS
+
+### Stardance
+Originally created for the Hackclub Stardance Mission Web OS 1, but now it's a personal project
 Link: https://stardance.hackclub.com/projects/46738
 
+## Hackatime 
+This is how much time i spent on this:
+
+![Hackatime Stats](https://github-readme-stats.hackclub.dev/api/wakatime?username=39739&api_domain=hackatime.hackclub.com&theme=darcula&custom_title=Hackatime+Stats&layout=compact&cache_seconds=0&langs_count=8)
 
 ## Screenshot
 
-![NexOS Screenshot](./README%20STUFF/SS_20260822.png)
-Screenshot last updated 2026-08-22
+![NexOS GIF](./README%20STUFF/GIF_20261029.gif)
+GIF last updated 2026-10-29
