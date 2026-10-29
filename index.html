@@ -99,7 +99,50 @@
 
     </div>
 
+    <div class="nexdraw window" id="nexdrawwindow">
+        <div class="windowheader nexdraw-header">
+            <p>NexDraw</p>
+            <p id="nexdrawclose">x</p>
+        </div>
+
+        <div class="nexdraw-toolbar">
+            <label for="drawtool">Tool</label>
+            <select id="drawtool">
+                <option value="pen">Pencil</option>
+                <option value="eraser">Eraser</option>
+                <option value="line">Line</option>
+                <option value="rect">Rectangle</option>
+                <option value="circle">Ellipse</option>
+            </select>
+
+            <label for="drawcolor">Color</label>
+            <input type="color" id="drawcolor" value="#000000">
+
+            <label for="drawsize">Size</label>
+            <input type="range" id="drawsize" min="1" max="50" value="5">
+            <span id="drawsizevalue">5 px</span>
+
+            <button type="button" id="drawundo">Undo</button>
+            <button type="button" id="drawredo">Redo</button>
+            <button type="button" id="drawclear">Clear</button>
+            <button type="button" id="drawopen">Open image</button>
+            <button type="button" id="drawsave">Save PNG</button>
+            <input type="file" id="drawfile" accept="image/*" hidden>
+        </div>
+
+        <div class="nexdraw-canvas-area">
+            <canvas id="drawcanvas" width="1200" height="700"></canvas>
+        </div>
+    </div>
+</div>
+
+
     <div id="desktopApps">
+
+        <div id="nexdraw_app" class="desktop-app" onclick="handleIconTap(this)">
+            <img class="app-icons" src="./APP%20LOGOS/nexdraw.svg" alt="NexDraw">
+            <p class="app-texts">NexDraw</p>
+        </div>
 
         <div id="clock_app" class="desktop-app" onclick="handleIconTap(this)">
             <img class="app-icons" src="./APP%20LOGOS/clock.png" alt="Clock">
@@ -127,6 +170,8 @@
         </div>
 
         <div id="desktop-app-bar">
+
+            <img class="desktop-app-bar-icons" id="barNexDraw" src="./APP%20LOGOS/nexdraw.svg" alt="NexDraw">
             <img class="desktop-app-bar-icons" id="barClock" src="./APP%20LOGOS/clock.png" alt="Clock">
             <img class="desktop-app-bar-icons" id="barNexos" src="./APP%20LOGOS/nexos_logo_small.png" alt="NexOS APP">
             <img class="desktop-app-bar-icons" id="barTerminal" src="./APP%20LOGOS/terminal.png" alt="Terminal">

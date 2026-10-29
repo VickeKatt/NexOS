@@ -542,3 +542,117 @@ a:hover {
         height: 48px;
     }
 }
+
+
+/* NexDraw */
+.nexdraw {
+    display: none;
+    flex-direction: column;
+    width: 82vw;
+    height: 80vh;
+    max-width: 1250px;
+    max-height: 900px;
+    min-width: min(320px, 92vw);
+    min-height: min(300px, 75vh);
+    padding: 0;
+    overflow: hidden;
+    background: #d4d0c8;
+    color: #111;
+    z-index: 14;
+}
+
+.nexdraw .nexdraw-header {
+    flex: 0 0 auto;
+    margin: 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.nexdraw-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px;
+    background: #ededed;
+    border-bottom: 2px solid #888;
+    font-size: 13px;
+    flex: 0 0 auto;
+}
+
+.nexdraw-toolbar button,
+.nexdraw-toolbar select {
+    min-height: 30px;
+    padding: 4px 8px;
+    color: #111;
+    background: #fff;
+    border: 1px solid #888;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.nexdraw-toolbar button:hover {
+    background: #ddd;
+}
+
+.nexdraw-toolbar input[type="color"] {
+    width: 34px;
+    height: 30px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.nexdraw-toolbar input[type="range"] {
+    width: 85px;
+}
+
+.nexdraw-canvas-area {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 12px;
+    background: #777;
+}
+
+#drawcanvas {
+    display: block;
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    max-width: 1200px;
+    background: #fff;
+    box-shadow: 0 1px 5px #333;
+    touch-action: none;
+    cursor: crosshair;
+}
+
+@media (max-width: 700px) {
+    .nexdraw {
+        width: 94vw;
+        height: 82vh;
+        min-width: 0;
+        min-height: 0;
+    }
+
+    .nexdraw-toolbar {
+        gap: 5px;
+        padding: 6px;
+    }
+
+    .nexdraw-toolbar button,
+    .nexdraw-toolbar select {
+        font-size: 12px;
+        padding: 3px 5px;
+    }
+
+    .nexdraw-toolbar input[type="range"] {
+        width: 60px;
+    }
+
+    .nexdraw-canvas-area {
+        padding: 6px;
+    }
+}

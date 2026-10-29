@@ -21,10 +21,7 @@ Originally created for the Hackclub Stardance Mission Web OS 1, but now it's a p
 <br>
 Link: https://stardance.hackclub.com/projects/46738
 
-## Screenshot / GIF
+## GIF
 
 ![NexOS GIF](./README%20STUFF/GIF_20261029.gif)
 GIF last updated 2026-10-29 
-
-![NexOS Screenshot](./README%20STUFF/SS_20261029_Y_WELCOME.png)
-SS last updated 2026-10-29
