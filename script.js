@@ -632,7 +632,7 @@ setWallpaper(
             const link = document.createElement("a");
 
             link.href = url;
-            link.download = "nexdraw.png";
+            link.download = "nex_draw.png";
             link.click();
 
             setTimeout(function() {
