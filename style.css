@@ -571,8 +571,8 @@ a:hover {
     flex-wrap: wrap;
     gap: 8px;
     padding: 10px;
-    background: #ededed;
-    border-bottom: 2px solid #888;
+    background: #777;
+    border-bottom: 2px solid #777;
     font-size: 13px;
     flex: 0 0 auto;
 }
@@ -599,7 +599,6 @@ a:hover {
     cursor: pointer;
 }
 
-/* Custom color picker */
 .color-picker-wrap {
     position: relative;
 }
